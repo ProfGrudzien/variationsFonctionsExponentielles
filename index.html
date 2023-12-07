@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Entrainement : variation des fonctions exponentielles</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            font-size: 24pt;}
+        input, select {
+            font-size: 24pt;}
+        input[type=number] { 
+            -moz-appearance: textfield;
+            appearance: textfield;
+            height: 50px;
+            width: 50px;
+            margin: 4px;
+            text-align: center}
+        input[type=number].long { 
+            width: 150px;}
+        sup input[type=number] {
+            height: 30px;
+            width: 30px;
+            font-size: 20pt;
+        }
+        input::-webkit-inner-spin-button,
+        input::-webkit-outer-spin-button { 
+            -webkit-appearance: none;
+            margin:0;}
+        input::-o-inner-spin-button,
+        input::-o-outer-spin-button { 
+            -o-appearance: none;
+            margin:0;}
+        span.math{
+            font-family: serif;
+            font-size: 24pt;
+            white-space: nowrap;}
+        span.frac{
+            display: inline-block;
+            position: relative;
+            vertical-align: middle;}
+        span.haut{
+            display: block;
+            text-align: center;
+            font-size: 24pt;}
+        span.bas{
+            display: block;
+            border-top: 2px solid;
+            text-align: center;
+            font-size: 24pt;}
+        span.aDroite{
+            float: right;}
+        div.correction{
+            color: blue;}
+    </style>
+    <script language="javascript">
+        function controle(form) {
+            var reponse = form.select.value;
+            if (reponse == form.solution) {form.querySelector('label.reponse').innerHTML = "VRAI";}
+            else {form.querySelector('label.reponse').innerHTML = "FAUX";}
+        }
+        function afficherCorrection(form) {
+            form.querySelector('div[class="correction"]').innerHTML = form.texteCorrection
+        };
+    </script>
+</head>
+
+<body>
+  <fieldset>
+      <legend>Fonction du type <span class="math">a<sup>x</sup></span></legend>
+      <form id="Q1">
+        <label class="question"></label>
+        <select>
+            <option value="croissante">croissante</option>
+            <option value="décroissante">décroissante</option>
+        </select>
+        <input type="button" onClick="controle(Q1)" value="Vérifier"/>
+        <label class="reponse"></label>
+        <div class="correction"><span class="aDroite"><input type="button" onClick="afficherCorrection(Q1)" value="Correction"/></span></div>
+        <script language="javascript">
+            var form = document.getElementById("Q1");
+            form.labelQuestion = form.querySelector(".question")
+            form.labelReponse = form.querySelector(".reponse")
+            form.divCorrection = form.querySelector('.correction')
+            form.select = form.querySelector('select')
+            if (Math.random() > 0.5) {
+                form.solution = "croissante"
+                form.base = Math.floor(Math.random() * 90 + 11);
+            } else {
+                form.solution = "décroissante"
+                form.base = Math.floor(Math.random() * 9 + 1);
+            }
+            form.texteBase = `${(form.base-form.base%10)/10}${form.base%10==0?"":("," + form.base%10)}`
+            form.labelQuestion.innerHTML = `La fonction <span class="math">f</span> définie par <span class="math">f(x) = ${form.texteBase}<sup>x</sup></span> est :`
+            form.texteCorrection = `Comme <span class="math">${form.texteBase} ${(form.base-form.base%10)/10<1?"<":">"} 1</span>, la fonction <span class="math">f</span> est ${form.solution}.`;
+        </script>
+      </form>
+  </fieldset>  
+  
+  <fieldset>
+      <legend>Fonction du type <span class="math">k &times; a<sup>x</sup></span></legend>
+      <form id="Q2">
+        <label class="question"></label>
+        <select>
+            <option value="croissante">croissante</option>
+            <option value="décroissante">décroissante</option>
+        </select>
+        <input type="button" onClick="controle(Q2)" value="Vérifier"/>
+        <label class="reponse"></label>
+        <div class="correction"><span class="aDroite"><input type="button" onClick="afficherCorrection(Q2)" value="Correction"/></span></div>
+        <script language="javascript">
+            var form = document.getElementById("Q2");
+            form.labelQuestion = form.querySelector(".question")
+            form.labelReponse = form.querySelector(".reponse")
+            form.divCorrection = form.querySelector('.correction')
+            form.select = form.querySelector('select')
+            if (Math.random() > 0.75) {
+                form.solution = "croissante"
+                form.base = Math.floor(Math.random() * 90 + 11);
+                form.k = Math.floor(Math.random() * 9 + 1)
+            } else if (Math.random() > 0.5) {
+                form.solution = "décroissante"
+                form.base = Math.floor(Math.random() * 90 + 11);
+                form.k = -Math.floor(Math.random() * 9 + 1)
+            } else if (Math.random() > 0.25) {
+                form.solution = "décroissante"
+                form.base = Math.floor(Math.random() * 9 + 1);
+                form.k = Math.floor(Math.random() * 9 + 1)
+            } else  {
+                form.solution = "croissante"
+                form.base = Math.floor(Math.random() * 9 + 1);
+                form.k = -Math.floor(Math.random() * 9 + 1)
+            }
+            form.texteBase = `${(form.base-form.base%10)/10}${form.base%10==0?"":("," + form.base%10)}`
+            form.labelQuestion.innerHTML = `La fonction <span class="math">f</span> définie par <span class="math">f(x) = ${form.k} &times; ${form.texteBase}<sup>x</sup></span> est :`
+            form.texteCorrection = `Comme <span class="math">${form.texteBase} ${(form.base-form.base%10)/10<1?"<":">"} 1</span>, la fonction <span class="math">x &mapsto; ${form.texteBase}<sup>x</sup></span> est ${(form.base-form.base%10)/10<1?"dé":""}croissante.<br/>`;
+            if (form.k<0) {
+                form.texteCorrection += `Comme <span class="math">${form.k} < 0</span>, les fonctions <span class="math">f</span> et <span class="math">x &mapsto; ${form.texteBase}<sup>x</sup></span> ont des sens de variation contraires.<br/>`
+            } else {
+                form.texteCorrection += `Comme <span class="math">${form.k} > 0</span>, les fonctions <span class="math">f</span> et <span class="math">x &mapsto; ${form.texteBase}<sup>x</sup></span> ont le même sens de variation.<br/>`
+            }
+            form.texteCorrection += `La fonction <span class="math">f</span> est donc ${form.solution}.`
+        </script>
+      </form>
+  </fieldset>
+  
+</body>
+</html>
